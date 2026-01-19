@@ -2,6 +2,21 @@
 string nome = Console.ReadLine();
 
 Console.WriteLine("Qual a sua idade?");
-int idade = int.Parse(Console.ReadLine());
+string inputIdade = Console.ReadLine();
 
-Console.WriteLine($"Olá, {nome}. Você tem {idade} anos.");
+bool idadeValida = int.TryParse(inputIdade, out int idade);
+
+if (!idadeValida)
+{
+    Console.WriteLine("Idade inválida. Digite apenas números.");
+    return;
+}
+
+if (idade >= 18)
+{
+    Console.WriteLine($"Olá, {nome}. Você tem {idade} anos. Você é maior de idade!");
+}
+else
+{
+    Console.WriteLine($"Olá, {nome}. Você tem {idade} anos. Você é menor de idade!");
+}
