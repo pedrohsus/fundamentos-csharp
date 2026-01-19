@@ -1,15 +1,20 @@
 ﻿Console.WriteLine("Qual o seu nome?");
 string nome = Console.ReadLine();
 
-Console.WriteLine("Qual a sua idade?");
-string inputIdade = Console.ReadLine();
+int idade = 0;
+bool idadeValida = false;
 
-bool idadeValida = int.TryParse(inputIdade, out int idade);
-
-if (!idadeValida)
+while (!idadeValida)
 {
-    Console.WriteLine("Idade inválida. Digite apenas números.");
-    return;
+    Console.WriteLine("Qual a sua idade?");
+    string inputIdade = Console.ReadLine();
+
+    idadeValida = int.TryParse(inputIdade, out idade);
+
+    if (!idadeValida)
+    {
+        Console.WriteLine("Idade inválida. Digite apenas números.");
+    }
 }
 
 if (idade >= 18)
