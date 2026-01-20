@@ -21,17 +21,15 @@
 int idade = LerIdadeValida();
 Pessoa pessoa = new Pessoa(idade);
 
-if (pessoa.IdadeForaDoIntervalo())
+ResultadoValidacao resultado = pessoa.ValidarIdade();
+
+if (!resultado.Sucesso)
 {
-    Console.WriteLine("Idade fora do intervalo permitido (0 à 120).");
-}
-else if (pessoa.EhMaiorDeIdade())
-{
-    Console.WriteLine("Maior de idade.");
+    Console.WriteLine(resultado.Erro);
 }
 else
 {
-    Console.WriteLine("Menor de idade.");
+    Console.WriteLine("Pessoa válida e maior de idade.");
 }
 
 class Pessoa
@@ -43,13 +41,40 @@ class Pessoa
         Idade = idade;
     }
 
-    public bool IdadeForaDoIntervalo()
+    public ResultadoValidacao ValidarIdade()
     {
-        return Idade < 0 || Idade > 120;
+        if (Idade < 0 || Idade > 120)
+        {
+            return ResultadoValidacao.Falha("Idade fora do intervalo permitido (0 a 120).");
+        }
+
+        if (Idade < 18)
+        {
+            return ResultadoValidacao.Falha("Pessoa menor de idade.");
+        }
+
+        return ResultadoValidacao.Ok();
+    }
+}
+
+class ResultadoValidacao
+{
+    public bool Sucesso {get;}
+    public string? Erro {get;}
+
+    private ResultadoValidacao(bool sucesso, string? erro)
+    {
+        Sucesso = sucesso;
+        Erro = erro;
     }
 
-    public bool EhMaiorDeIdade()
+    public static ResultadoValidacao Ok()
     {
-        return Idade >= 18;
+        return new ResultadoValidacao(true, null);
+    }
+
+    public static ResultadoValidacao Falha(string erro)
+    {
+        return new ResultadoValidacao(false, erro);
     }
 }
