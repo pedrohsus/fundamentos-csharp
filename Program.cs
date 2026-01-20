@@ -1,27 +1,35 @@
-﻿Console.WriteLine("Qual o seu nome?");
-string nome = Console.ReadLine();
-
-int idade = 0;
-bool idadeValida = false;
-
-while (!idadeValida)
+﻿static int LerIdadeValida()
 {
-    Console.WriteLine("Qual a sua idade?");
-    string inputIdade = Console.ReadLine();
+    int idade;
+    bool idadeValida;
 
-    idadeValida = int.TryParse(inputIdade, out idade);
-
-    if (!idadeValida)
+    do
     {
-        Console.WriteLine("Idade inválida. Digite apenas números.");
-    }
+        Console.WriteLine("Digite sua idade: ");
+        string input = Console.ReadLine();
+        idadeValida = int.TryParse(input, out idade);
+
+        if (!idadeValida)
+        {
+            Console.WriteLine("Entrada inválida.");
+        }
+    } while (!idadeValida);
+
+    return idade;
 }
 
-if (idade >= 18)
+static bool EhMaiorDeIdade(int idade)
 {
-    Console.WriteLine($"Olá, {nome}. Você tem {idade} anos. Você é maior de idade!");
+    return idade >= 18;
+}
+
+int idade = LerIdadeValida();
+
+if (EhMaiorDeIdade(idade))
+{
+    Console.WriteLine("Maior de idade");
 }
 else
 {
-    Console.WriteLine($"Olá, {nome}. Você tem {idade} anos. Você é menor de idade!");
+    Console.WriteLine("Menor de idade");
 }
