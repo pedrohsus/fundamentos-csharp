@@ -6,7 +6,7 @@
     do
     {
         Console.WriteLine("Digite sua idade: ");
-        string input = Console.ReadLine();
+        string? input = Console.ReadLine();
         idadeValida = int.TryParse(input, out idade);
 
         if (!idadeValida)
@@ -18,18 +18,38 @@
     return idade;
 }
 
-static bool EhMaiorDeIdade(int idade)
-{
-    return idade >= 18;
-}
-
 int idade = LerIdadeValida();
+Pessoa pessoa = new Pessoa(idade);
 
-if (EhMaiorDeIdade(idade))
+if (pessoa.IdadeForaDoIntervalo())
 {
-    Console.WriteLine("Maior de idade");
+    Console.WriteLine("Idade fora do intervalo permitido (0 à 120).");
+}
+else if (pessoa.EhMaiorDeIdade())
+{
+    Console.WriteLine("Maior de idade.");
 }
 else
 {
-    Console.WriteLine("Menor de idade");
+    Console.WriteLine("Menor de idade.");
+}
+
+class Pessoa
+{
+    public int Idade {get;}
+
+    public Pessoa(int idade)
+    {
+        Idade = idade;
+    }
+
+    public bool IdadeForaDoIntervalo()
+    {
+        return Idade < 0 || Idade > 120;
+    }
+
+    public bool EhMaiorDeIdade()
+    {
+        return Idade >= 18;
+    }
 }
